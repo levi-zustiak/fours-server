@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Server, Socket } from 'socket.io';
 import { Logger } from '@nestjs/common';
-import { from } from 'rxjs';
 
 @Injectable()
 export class InvitesService {
@@ -18,32 +17,17 @@ export class InvitesService {
     return this.logger.log(`Created client ${client.id} for ${user}`);
   }
 
-  offer(client: Socket, { offer, to, from}) {
+  message(client: Socket, { description, to, from }) {
     const socket = this.findSocket(to);
 
     if (socket) {
-      client.broadcast.to(socket.id).emit('offer-received', {
-        offer: offer,
+      client.broadcast.to(socket.id).emit('message-received', {
+        description: description,
         from: from,
       });
-      return this.logger.log(`Client ${client.id} sent invite to ${socket.id}`);
+      return this.logger.log(`User ${from} sent message to ${to}`);
     } else {
-      // Add actual error handling here
-      console.log('Invite: no socket found');
-    }
-  }
-
-  accept(client: Socket, { answer, to, from }) {
-    const socket = this.findSocket(to);
-
-    if (socket) {
-      client.broadcast.to(socket.id).emit('offer-accepted', {
-        answer: answer,
-        from: from,
-      });
-      return this.logger.log(`Client ${client.id} accepted invite from ${socket.id}`);
-    } else {
-      console.log('Accept: no socket found');
+      console.log('No socket found');
     }
   }
 

@@ -9,9 +9,8 @@ import {
 } from '@nestjs/websockets';
 import { 
   JoinSessionDto,
-  SendOfferDto,
-  AcceptOfferDto,
   IceCandidateDto,
+  MessageDTO,
 } from './dto';
 import { InvitesService } from './invites.service';
 import { Server, Socket } from 'socket.io';
@@ -31,14 +30,9 @@ export class InvitesGateway implements OnGatewayInit, OnGatewayDisconnect {
     return this.invitesService.join(client, joinSessionDto);
   }
 
-  @SubscribeMessage('sendOffer')
-  sendOffer(@ConnectedSocket() client: Socket, @MessageBody() sendOfferDto: SendOfferDto) {
-    return this.invitesService.offer(client, sendOfferDto);
-  }
-
-  @SubscribeMessage('offerAccepted')
-  acceptInvite(@ConnectedSocket() client: Socket, @MessageBody() acceptOfferDto: AcceptOfferDto) {
-    return this.invitesService.accept(client, acceptOfferDto);
+  @SubscribeMessage('sendMessage')
+  sendMessage(@ConnectedSocket() client: Socket, @MessageBody() messageDTO: MessageDTO) {
+    return this.invitesService.message(client, messageDTO);
   }
 
   @SubscribeMessage('declineOffer')

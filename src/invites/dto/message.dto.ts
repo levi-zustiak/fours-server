@@ -1,9 +1,9 @@
 import IDescription from '../interfaces/IDescription';
 
-export class AcceptOfferDto {
-    answer: IDescription;
+export class MessageDto {
+    description: IDescription;
     to: string;
     from: string;
 }
 
-export default AcceptOfferDto;
+export default MessageDto;

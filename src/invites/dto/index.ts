@@ -1,11 +1,9 @@
 import JoinSessionDto from "./join-session.dto";
-import SendOfferDto from "./send-offer.dto";
-import AcceptOfferDto from "./accept-offer.dto";
 import IceCandidateDto from "./ice-candidate.dto";
+import MessageDTO from "./message.dto";
 
 export { 
     JoinSessionDto,
-    SendOfferDto,
-    AcceptOfferDto,
-    IceCandidateDto
+    IceCandidateDto,
+    MessageDTO,
 };
