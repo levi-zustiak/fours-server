@@ -1,6 +1,7 @@
 export class IceCandidateDto {
-    candidate: RTCIceCandidate;
+    gameSessionId: string;
     peer: string;
+    candidate: RTCIceCandidate;
 }
 
 export default IceCandidateDto;

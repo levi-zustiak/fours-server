@@ -7,8 +7,8 @@ import {
   OnGatewayDisconnect,
   ConnectedSocket,
 } from '@nestjs/websockets';
-import { 
-  JoinSessionDto,
+import {
+  GameSessionDto,
   IceCandidateDto,
   MessageDTO,
 } from './dto';
@@ -25,9 +25,14 @@ export class InvitesGateway implements OnGatewayInit, OnGatewayDisconnect {
   
   constructor(private readonly invitesService: InvitesService) {}
 
+  @SubscribeMessage('createSession')
+  createSession(@ConnectedSocket() client: Socket, @MessageBody() gameSessionDto: GameSessionDto) {
+    return this.invitesService.create(client, gameSessionDto);
+  }
+
   @SubscribeMessage('joinSession')
-  joinSession(@ConnectedSocket() client: Socket, @MessageBody() joinSessionDto: JoinSessionDto) {
-    return this.invitesService.join(client, joinSessionDto);
+  gameSessionMessage(@ConnectedSocket() client: Socket, @MessageBody() gameSessionDto: GameSessionDto) {
+    return this.invitesService.join(client, gameSessionDto);
   }
 
   @SubscribeMessage('sendMessage')

@@ -1,9 +1,9 @@
 import IDescription from '../interfaces/IDescription';
 
 export class MessageDto {
+    gameSessionId: string;
     description: IDescription;
     to: string;
-    from: string;
 }
 
 export default MessageDto;
