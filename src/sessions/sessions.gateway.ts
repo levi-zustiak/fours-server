@@ -41,8 +41,8 @@ export class SessionsGateway implements OnGatewayInit, OnGatewayDisconnect {
     return this.sessionsService.end(client, endSessionDto);
   }
 
-  @SubscribeMessage('sendMessage')
-  sendMessage(@ConnectedSocket() client: Socket, @MessageBody() messageDTO: MessageDTO) {
+  @SubscribeMessage('connectionMessage')
+  connectionMessage(@ConnectedSocket() client: Socket, @MessageBody() messageDTO: MessageDTO) {
     return this.sessionsService.message(client, messageDTO);
   }
 
