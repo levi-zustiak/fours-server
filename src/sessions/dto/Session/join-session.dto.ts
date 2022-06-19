@@ -1,8 +1,12 @@
-import { IUser } from "src/sessions/interfaces"
+type Player = {
+    id: string;
+    name: string;
+    socket: string;
+}
 
 class JoinSessionDto {
     gameId: string;
-    user: IUser;
+    player: Player;
 }
 
 export default JoinSessionDto;

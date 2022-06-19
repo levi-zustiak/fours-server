@@ -1,7 +1,11 @@
-import { IUser } from "src/sessions/interfaces";
+type Player = {
+    id: string;
+    name: string;
+    socket: string;
+};
 
 export class CreateSessionDto {
-    user: IUser;
+    player: Player;
 }
 
 export default CreateSessionDto;

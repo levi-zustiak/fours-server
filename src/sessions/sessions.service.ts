@@ -14,13 +14,13 @@ const Status = {
 export class SessionsService {
   private gameSessions: ISession[] = [];
 
-  public async create({ user }): Promise<IResponse> {
+  public async create({ player }): Promise<IResponse> {
     try {
       const gameId = await v4().slice(0, 8);
 
       const gameSession = {
         id: gameId,
-        players: [user],
+        players: [player],
       };
   
       this.gameSessions = [
@@ -28,35 +28,37 @@ export class SessionsService {
         gameSession,
       ];
   
-      console.log(`${user} created a game session`);
+      console.log(`${player.name} created a game session`);
       
       console.log(gameSession);
 
-      return this.ok({ gameId: gameSession.id });
+      return this.success({ gameId: gameSession.id });
     } catch (e) {
       return this.err(e);
     }
   }
 
-  public join(client: Socket, { gameId, user }) {
+  public join(client: Socket, { gameId, player }) {
     try {
+      console.log('join', gameId);
+      
       const existingGameSession = this.findGameSession(gameId);
 
       if (existingGameSession.players?.length < 2) {
-        existingGameSession.players?.push(user);
+        existingGameSession.players?.push(player);
       } else {
         throw new Error('Game session is full');
       }
 
       client.broadcast.to(existingGameSession.players[0]?.socket).emit('player-joined', {
-        peer: existingGameSession.players[1],
+        player: existingGameSession.players[1],
       });
   
-      console.log(`${user} joined a game session`);
+      console.log(`${player.name} joined a game session`);
   
       console.log(existingGameSession);
 
-      return this.ok({
+      return this.success({
         gameId: gameId,
         peer: existingGameSession.players[0],
       });
@@ -90,7 +92,7 @@ export class SessionsService {
 
       console.log(`Sent message to ${to} ${player.socket}`);
 
-      return this.ok();
+      return this.success();
     } catch (e) {
       return this.err(e);
     }
@@ -108,7 +110,7 @@ export class SessionsService {
       
       console.log(`sent ice candidate to ${player.name}`)
 
-      return this.ok();
+      return this.success();
     } catch (e) {
       return this.err(e);
     }
@@ -154,7 +156,7 @@ export class SessionsService {
     }
   }
 
-  private ok(data?: any): IResponse {
+  private success(data?: any): IResponse {
     return {
       status: Status.SUCCESS,
       data: data,
