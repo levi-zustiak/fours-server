@@ -5,16 +5,17 @@ export class Lobby {
   public id: string;
   public host: User;
   public peer: User;
+  public game: Game | null;
 
   constructor() {
     this.id = v4();
   }
 
-  public setHost(user: User) {
+  setHost(user: User) {
     this.host = user;
   }
 
-  public setPeer(user: User) {
+  setPeer(user: User) {
     this.peer = user;
   }
 }
