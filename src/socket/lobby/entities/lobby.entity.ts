@@ -1,5 +1,6 @@
 import { User } from '@/common/interfaces';
 import { v4 } from 'uuid';
+import { Game } from './game.entity';
 
 export class Lobby {
   public id: string;
@@ -17,5 +18,9 @@ export class Lobby {
 
   setPeer(user: User) {
     this.peer = user;
+  }
+
+  newGame() {
+    this.game = new Game(this.host, this.peer);
   }
 }

@@ -3,6 +3,7 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Server, Socket } from 'socket.io';
 import { CreateDto } from './dto/CreateDto';
 import { JoinDto } from './dto/JoinDto';
+import { Game } from './entities/game.entity';
 import { Lobby } from './entities/lobby.entity';
 
 @Injectable()
@@ -34,6 +35,8 @@ export class LobbyService {
     lobby.setPeer(user);
 
     client.join(lobby.id);
+
+    lobby.newGame();
 
     this.eventEmitter.emit('lobby:start', lobby);
   }
