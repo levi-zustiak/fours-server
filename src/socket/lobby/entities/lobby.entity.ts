@@ -21,6 +21,6 @@ export class Lobby {
   }
 
   newGame() {
-    this.game = new Game(this.host, this.peer);
+    this.game = new Game(this.host.id);
   }
 }
