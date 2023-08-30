@@ -50,11 +50,12 @@ export class LobbyService {
 
     const lobby = this.getLobby(id);
 
-    const state = await lobby.game.update(user, col);
+    // await lobby.game.update(user, col);
 
-    console.log(state);
-
-    this.eventEmitter.emit('game:update', { id: lobby.id, state });
+    this.eventEmitter.emit('game:update', {
+      lobbyId: lobby.id,
+      state: lobby.game,
+    });
   }
 
   private getLobby(lobbyId: string): Lobby {

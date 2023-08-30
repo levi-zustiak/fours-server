@@ -8,17 +8,37 @@ services:
       - .:/usr/src/app
     env_file:
       - .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}?schema=public
     command: npm run start:dev
     ports:
       - 3001:3001
     depends_on:
       - redis
+      - postgres
+
   redis:
     image: redis
     ports:
-      - 6379:6379
+      - 6380:6380
     volumes:
       - redis:/data
+
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - '5432:5432'
+    env_file:
+      - .env
+    volumes:
+      - fours-db:/var/lib/postgresql/data
+
 volumes:
   redis:
     driver: local
+  fours-db:

@@ -47,11 +47,9 @@ export class LobbyGateway implements OnGatewayInit, OnGatewayDisconnect {
 
   @OnEvent('game:update')
   handleGameUpdate(gameUpdate) {
-    const { id, state } = gameUpdate;
+    const { lobbyId, state } = gameUpdate;
 
-    console.log(id, state);
-
-    this.server.to(id).emit('game:update', state);
+    this.server.to(lobbyId).emit('game:update', state);
   }
 
   public afterInit(server: Server) {

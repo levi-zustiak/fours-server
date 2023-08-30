@@ -21,6 +21,6 @@ export class Lobby {
   }
 
   newGame() {
-    this.game = new Game(this.host.id);
+    this.game = new Game(~~(Math.random() * 2), this.host, this.peer);
   }
 }
