@@ -29,14 +29,14 @@ export class AuthService {
   }
 
   async login(user) {
-    const accessToken = await this.jwtService.signAsync({
+    const token = await this.jwtService.signAsync({
       sub: user.id,
       username: user.name,
     });
 
     return {
       user,
-      accessToken,
+      token,
     };
   }
 

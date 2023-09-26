@@ -21,15 +21,14 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async signIn(@Request() req, @Response() res): Promise<void> {
-    const { user, accessToken } = await this.authService.login(req.user);
+    const { user, token } = await this.authService.login(req.user);
 
     res
-      .cookie('access_token', accessToken, {
+      .cookie('access_token', token, {
         sameSite: 'lax',
         httpOnly: true,
       })
-      .send(user)
-      .redirect('/');
+      .send({ user });
   }
 
   @Get('logout')
